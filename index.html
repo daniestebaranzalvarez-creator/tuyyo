@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tú y Yo ❤️</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Georgia,serif;
+}
+
+body{
+background:linear-gradient(180deg,#F5EFE6,#DCC7A1);
+overflow-x:hidden;
+color:#5E4632;
+}
+
+/* Corazones */
+
+.hearts{
+position:fixed;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:-1;
+}
+
+.heart{
+position:absolute;
+color:#b67856;
+animation:float 10s linear infinite;
+font-size:20px;
+}
+
+@keyframes float{
+from{
+transform:translateY(110vh);
+opacity:1;
+}
+to{
+transform:translateY(-20vh);
+opacity:0;
+}
+}
+
+header{
+text-align:center;
+padding:60px 20px;
+}
+
+header h1{
+font-size:4rem;
+margin-bottom:10px;
+}
+
+header p{
+font-size:1.2rem;
+}
+
+.section{
+max-width:950px;
+margin:auto;
+padding:25px;
+}
+
+.card{
+background:rgba(255,255,255,0.65);
+backdrop-filter:blur(8px);
+padding:30px;
+border-radius:25px;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+margin-bottom:30px;
+}
+
+.fechas{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.fecha{
+background:#8B6E4E;
+color:white;
+padding:15px 25px;
+border-radius:15px;
+font-size:1.2rem;
+}
+
+.contador{
+text-align:center;
+margin-top:20px;
+font-size:1.4rem;
+font-weight:bold;
+}
+
+button{
+background:#8B6E4E;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:10px;
+cursor:pointer;
+font-size:1rem;
+}
+
+button:hover{
+background:#6f5438;
+}
+
+.carta{
+display:none;
+margin-top:20px;
+line-height:1.8;
+}
+
+input[type=file]{
+margin-top:15px;
+width:100%;
+padding:15px;
+border:2px solid #bfa07c;
+border-radius:10px;
+background:white;
+}
+
+.gallery{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+margin-top:20px;
+}
+
+.gallery img{
+width:220px;
+border-radius:15px;
+box-shadow:0 5px 12px rgba(0,0,0,.2);
+}
+
+audio{
+width:100%;
+margin-top:10px;
+}
+
+.frase{
+font-size:1.4rem;
+font-style:italic;
+text-align:center;
+}
+
+footer{
+padding:40px;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<header>
+<h1>❤️ Tú y Yo ❤️</h1>
+<p>Nuestra historia escrita con amor</p>
+</header>
+
+<div class="section">
+
+<div class="card">
+
+<h2 style="text-align:center;">✨ Nuestras Fechas Especiales ✨</h2>
+
+<div class="fechas">
+<div class="fecha">25 / 07 / 2025</div>
+<div class="fecha">27 / 03 / 2026</div>
+</div>
+
+<div class="contador">
+Llevamos juntos: <span id="dias"></span> días ❤️
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>💌 Carta de Amor</h2>
+
+<button onclick="mostrarCarta()">
+Abrir mi corazón
+</button>
+
+<div class="carta" id="carta">
+
+<p>
+Mi amor,
+<br><br>
+
+Cada día a tu lado se convierte en uno de mis recuerdos favoritos.
+Tu sonrisa ilumina incluso mis días más grises y tu compañía hace que todo tenga sentido.
+
+Gracias por cada momento, cada abrazo y cada sueño compartido.
+
+No importa cuánto tiempo pase, siempre elegiría vivir esta historia contigo.
+
+❤️ Te quiero muchísimo ❤️
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>📸 Nuestra Galería</h2>
+
+<input type="file" id="fotoInput" accept="image/*" multiple>
+
+<div class="gallery" id="gallery"></div>
+
+</div>
+
+<div class="card">
+
+<h2>🎵 Nuestra Música</h2>
+
+<input type="file" id="audioInput" accept="audio/*">
+
+<div id="audioContainer"></div>
+
+</div>
+
+<div class="card">
+<p class="frase">
+"Contigo descubrí que el amor no es encontrar a alguien perfecto,
+sino aprender a ver la perfección en alguien especial."
+</p>
+</div>
+
+</div>
+
+<footer>
+❤️ Para la persona más importante de mi vida ❤️
+</footer>
+
+<script>
+
+/* corazones */
+
+const hearts=document.getElementById("hearts");
+
+setInterval(()=>{
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"%";
+heart.style.fontSize=(15+Math.random()*30)+"px";
+heart.style.animationDuration=(6+Math.random()*8)+"s";
+
+hearts.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},14000);
+
+},600);
+
+/* contador */
+
+const inicio=new Date("2025-07-25");
+const hoy=new Date();
+
+const diferencia=Math.floor(
+(hoy-inicio)/(1000*60*60*24)
+);
+
+document.getElementById("dias").textContent=diferencia;
+
+/* carta */
+
+function mostrarCarta(){
+const carta=document.getElementById("carta");
+
+if(carta.style.display==="block"){
+carta.style.display="none";
+}else{
+carta.style.display="block";
+}
+}
+
+/* fotos */
+
+document.getElementById("fotoInput")
+.addEventListener("change",function(){
+
+const gallery=document.getElementById("gallery");
+
+for(let file of this.files){
+
+const img=document.createElement("img");
+img.src=URL.createObjectURL(file);
+
+gallery.appendChild(img);
+}
+
+});
+
+/* audio */
+
+document.getElementById("audioInput")
+.addEventListener("change",function(){
+
+const file=this.files[0];
+
+if(file){
+
+const audio=document.createElement("audio");
+
+audio.controls=true;
+audio.src=URL.createObjectURL(file);
+
+const container=document.getElementById("audioContainer");
+
+container.innerHTML="";
+
+container.appendChild(audio);
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
